@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EchoNest.Song
@@ -12,16 +14,24 @@ namespace EchoNest.Song
 
         #region Methods
 
-        public ProfileResponse Execute(IdSpace trackId, SongBucket? bucket = null)
+        public ProfileResponse Execute(IEnumerable<IdSpace> trackIds, SongBucket? bucket = null)
         {
-            UriQuery query = GetQuery(bucket).Add("track_id", trackId);
+            UriQuery query = GetQuery(bucket);
+            foreach (var trackId in trackIds)
+            {
+                query.Add("track_id", trackId);
+            }
 
             return Execute<ProfileResponse>(query.ToString());
         }
 
-        public Task<ProfileResponse> ExecuteAsync(IdSpace trackId, SongBucket? bucket = null)
+        public Task<ProfileResponse> ExecuteAsync(IEnumerable<IdSpace> trackIds, SongBucket? bucket = null)
         {
-            UriQuery query = GetQuery(bucket).Add("track_id", trackId);
+            UriQuery query = GetQuery(bucket);
+            foreach (var trackId in trackIds)
+            {
+                query.Add("track_id", trackId);
+            }
 
             return ExecuteAsync<ProfileResponse>(query.ToString());
         }

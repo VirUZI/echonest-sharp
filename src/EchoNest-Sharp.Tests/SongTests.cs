@@ -106,12 +106,14 @@ namespace EchoNest.Tests
             using (EchoNestSession session = new EchoNestSession(ConfigurationManager.AppSettings.Get("echoNestApiKey")))
             {
                 const string songId = "spotify-WW:track:0hAN0b6tSBuHMIvBGGdXNP";
+                const string songId2 = "spotify-WW:track:6zrGHFJzIaGv2O02dDay1k";
                 const string expectedEchoNestId = "SOAEDJD13F6397EE1A";
-                EchoNest.Song.ProfileResponse profileResponse = session.Query<EchoNest.Song.Profile>().Execute(new IdSpace(songId), SongBucket.AudioSummary);
+                EchoNest.Song.ProfileResponse profileResponse = session.Query<EchoNest.Song.Profile>().Execute(new[] { new IdSpace(songId), new IdSpace(songId2) }, SongBucket.AudioSummary);
 
                 //assert
                 Assert.IsNotNull(profileResponse);
                 Assert.IsNotNull(profileResponse.Songs);
+                Assert.IsTrue(profileResponse.Songs.Count == 2);
 
                 var songExists = profileResponse.Songs.Any(song => song.ID == expectedEchoNestId);
                 Assert.IsTrue(songExists, "Song does not exist in profile response");
