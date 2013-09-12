@@ -98,5 +98,33 @@ namespace EchoNest.Tests
                 Console.WriteLine();
             }
         }
+
+        [Test]
+        public void GetSongs_Profile_ExpectedArtist()
+        {
+            //act
+            using (EchoNestSession session = new EchoNestSession(ConfigurationManager.AppSettings.Get("echoNestApiKey")))
+            {
+                const string songId = "spotify-WW:track:0hAN0b6tSBuHMIvBGGdXNP";
+                const string expectedEchoNestId = "SOAEDJD13F6397EE1A";
+                EchoNest.Song.ProfileResponse profileResponse = session.Query<EchoNest.Song.Profile>().Execute(new IdSpace(songId), SongBucket.AudioSummary);
+
+                //assert
+                Assert.IsNotNull(profileResponse);
+                Assert.IsNotNull(profileResponse.Songs);
+
+                var songExists = profileResponse.Songs.Any(song => song.ID == expectedEchoNestId);
+                Assert.IsTrue(songExists, "Song does not exist in profile response");
+
+                // output
+                Console.WriteLine("Tracks for profile '{0}'", songId);
+                foreach (SongBucketItem song in profileResponse.Songs)
+                {
+                    Console.WriteLine("\t{0} ({1})", song.Title, song.ArtistName);
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+        }
     }
 }

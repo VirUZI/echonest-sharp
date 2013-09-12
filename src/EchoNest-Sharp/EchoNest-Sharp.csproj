@@ -115,6 +115,8 @@
     <Compile Include="Playlist\SessionInfoTerm.cs" />
     <Compile Include="Playlist\Static.cs" />
     <Compile Include="Playlist\StaticArgument.cs" />
+    <Compile Include="Song\Profile.cs" />
+    <Compile Include="Song\ProfileResponse.cs" />
     <Compile Include="Term.cs" />
     <Compile Include="TermList.cs" />
     <Compile Include="Artist\Terms.cs" />
