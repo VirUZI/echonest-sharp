@@ -25,6 +25,8 @@ namespace EchoNest.Song
         [Description("id:7digital")]
         Id7digital = 65536,
         [Description("id:rdio-us-streaming")]
-        IdRdioUsStreaming = 131072
+        IdRdioUsStreaming = 131072,
+        [Description("id:spotify-WW")]
+        IdSpotify = 262144
     }
 }
