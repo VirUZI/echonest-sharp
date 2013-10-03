@@ -26,5 +26,7 @@ namespace EchoNest.Song
         public double SongHotttnesss { get; set; }
         [DataMember(Name = "tracks")]
         public List<TracksItem> Tracks { get; set; }
+        [DataMember(Name="song_type")]
+        public List<string> SongType { get; set; }
     }
 }

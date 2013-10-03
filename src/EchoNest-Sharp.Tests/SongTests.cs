@@ -102,13 +102,15 @@ namespace EchoNest.Tests
         [Test]
         public void GetSongs_Profile_ExpectedArtist()
         {
+            const string songId = "spotify-WW:track:0hAN0b6tSBuHMIvBGGdXNP";
+            const string songId2 = "spotify-WW:track:6zrGHFJzIaGv2O02dDay1k";
+            const string expectedEchoNestId = "SOAEDJD13F6397EE1A";
+            const SongBucket buckets = SongBucket.AudioSummary | SongBucket.SongType;
+
             //act
             using (EchoNestSession session = new EchoNestSession(ConfigurationManager.AppSettings.Get("echoNestApiKey")))
             {
-                const string songId = "spotify-WW:track:0hAN0b6tSBuHMIvBGGdXNP";
-                const string songId2 = "spotify-WW:track:6zrGHFJzIaGv2O02dDay1k";
-                const string expectedEchoNestId = "SOAEDJD13F6397EE1A";
-                EchoNest.Song.ProfileResponse profileResponse = session.Query<EchoNest.Song.Profile>().Execute(new[] { new IdSpace(songId), new IdSpace(songId2) }, SongBucket.AudioSummary);
+                var profileResponse = session.Query<Song.Profile>().Execute(new[] { new IdSpace(songId), new IdSpace(songId2) }, buckets);
 
                 //assert
                 Assert.IsNotNull(profileResponse);
